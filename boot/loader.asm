@@ -20,7 +20,6 @@ jmp $
 %include "boot/utills.asm"
 %include "boot/protected_mode.asm"
 
-
 ;------------------------
 ; Padding bytes
 ;------------------------
