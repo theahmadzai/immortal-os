@@ -11,6 +11,10 @@
                     mov     si, msg_real_mode
                     call    print_string
 
+                    mov     al, 0x9
+                    mov     bx, kernel_start                    ; 0x7e00 [0x7c00+512]
+                    call    read_from_disk
+
                     call    protected_mode                      ; Switch to protected mode
 
                     jmp     $                                   ; Hang
@@ -19,6 +23,8 @@
 
 BEGIN_PM:           mov     esi, msg_prot_mode                  ; Execute protected mode code
                     call    print_string_pm
+
+                    jmp     kernel_start
 
                     jmp     $                                   ; Hang
 
@@ -36,3 +42,9 @@ BEGIN_PM:           mov     esi, msg_prot_mode                  ; Execute protec
 ;------------------------
 times 510-($-$$) db 0
 dw 0xaa55
+
+;------------------------
+; Kernel entry
+; 0x7e00 - c kernel
+;------------------------
+kernel_start:

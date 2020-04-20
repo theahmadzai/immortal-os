@@ -67,7 +67,7 @@ _ph.skip7:          add     al, 48                          ; Move to number bra
                     ret
 
 ;------------------------
-; Argument: None
+; Argument: al, bx
 ;------------------------
 read_from_disk:     push    ax
                     push    bx
@@ -76,16 +76,18 @@ read_from_disk:     push    ax
                     push    es
 
                     mov     ah, 0x2                             ; Read sectors from drive
-                    mov     al, 0x1                             ; Number of sectors to read
+                    ; mov     al, 0x1                            ; Number of sectors to read
 
                     mov     ch, 0x0                             ; Select cylinder
                     mov     cl, 0x2                             ; Select sector
                     mov     dh, 0x0                             ; Select head
-                    ;mov    dl, 0x80                           ; Select drive
+                    ; mov     dl, 0x80                            ; Select drive
 
+                    push    bx
                     mov     bx, 0
                     mov     es, bx
-                    mov     bx, 0x7c00 + 512
+                    pop     bx
+                    ; mov     bx, 0x7c00 + 512
 
                     int     0x13
 
