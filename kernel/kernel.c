@@ -4,7 +4,7 @@ void print(char *);
 
 void _start(void)
 {
-    print("Executing Kernel!!!!");
+    print("Executing kernel!!");
 
     while (1)
     {
@@ -16,7 +16,7 @@ void print(char *message)
     char *p_video_buffer = (char *)VIDEO_MEMORY;
     char *p_next_char = message;
 
-    while (*message != 'l')
+    while (*p_next_char)
     {
         *p_video_buffer = *p_next_char;
         p_next_char += 0x1;
