@@ -1,31 +1,38 @@
-[org 0x7c00]                                ; Set the offset location of first byte
+[org 0x7c00]
+;----------------------------------------------------
+; Boot loader main
+;----------------------------------------------------
+; all the bootstrap code to load os
+;
 
-mov bp, 0xFFFF                              ; Set bottom of the stack
-mov sp, bp                                  ; Set top of the stack
+                    mov     bp, 0xfffe                          ; Set bottom of the stack
+                    mov     sp, bp                              ; Set top of the stack
 
-mov si, msg_real_mode
-call print_string
+                    mov     si, msg_real_mode
+                    call    print_string
 
-call read_from_disk
+                    call    protected_mode                      ; Switch to protected mode
 
-;------------------------
-; Hang
-;------------------------
-jmp $
+                    jmp     $                                   ; Hang
+
+[bits 32]
+
+BEGIN_PM:           mov     esi, msg_prot_mode                  ; Execute protected mode code
+                    call    print_string_pm
+
+                    jmp     $                                   ; Hang
+
+[bits 16]
 
 ;------------------------
 ; Include dependencies
 ;------------------------
 %include "boot/messages.asm"
-%include "boot/utills.asm"
 %include "boot/protected_mode.asm"
+%include "boot/utills.asm"
 
 ;------------------------
 ; Padding bytes
 ;------------------------
 times 510-($-$$) db 0
 dw 0xaa55
-
-test: db "testing.....", 0
-
-times 512 db 0
