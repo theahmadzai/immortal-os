@@ -1,11 +1,18 @@
-[org 0x7c00]
+[org 0x7C00]
 ;----------------------------------------------------
 ; Boot loader main
 ;----------------------------------------------------
 ; all the bootstrap code to load os
 ;
-
-                    mov     bp, 0xfffe                          ; Set bottom of the stack
+                    mov     ax, 0x0
+                    mov     ds, ax
+                    mov     es, ax
+                    mov     fs, ax
+                    mov     gs, ax
+                    mov     ss, ax
+                    jmp     0x0:CODE_SEGMENT
+CODE_SEGMENT:
+                    mov     bp, 0xFFFE                          ; Set bottom of the stack
                     mov     sp, bp                              ; Set top of the stack
 
                     mov     si, msg_real_mode
@@ -33,15 +40,17 @@ BEGIN_PM:           mov     esi, msg_prot_mode                  ; Execute protec
 ;------------------------
 ; Include dependencies
 ;------------------------
-%include "boot/messages.asm"
 %include "boot/protected_mode.asm"
 %include "boot/utills.asm"
+
+DATA_SEGMENT:
+%include "boot/messages.asm"
 
 ;------------------------
 ; Padding bytes
 ;------------------------
 times 510-($-$$) db 0
-dw 0xaa55
+dw 0xAA55
 
 ;------------------------
 ; Kernel entry

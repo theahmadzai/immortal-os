@@ -1,32 +1,30 @@
 gdt_start:                                                  ; Start of gdt descriptor
 
 ;------------------------
-; Null descriptor
-; 8 Bytes null
-; 0x0000 0x0000
+; 16 Bytes null descriptor
 ;------------------------
-gdt_null:           dd      0x0
-                    dd      0x0
+gdt_null:           dd      0x00000000
+                    dd      0x00000000
 
 ;------------------------
 ; Code segment descriptor
 ;------------------------
-gdt_code:           dw      0xffff
-                    dw      0x0
-                    db      0x0
-                    db      10011010b
-                    db      11001111b
-                    db      0x0
+gdt_code:           dw      0xFFFF
+                    dw      0x0000
+                    db      0x00
+                    db      0b10011010
+                    db      0b11001111
+                    db      0x00
 
 ;------------------------
 ; Data segment descriptor
 ;------------------------
-gdt_data:           dw      0xffff
-                    dw      0x0
-                    db      0x0
-                    db      10010010b
-                    db      11001111b
-                    db      0x0
+gdt_data:           dw      0xFFFF
+                    dw      0x0000
+                    db      0x00
+                    db      0b10010010
+                    db      0b11001111
+                    db      0x00
 
 gdt_end:                                                    ; End of gdt descriptor
 

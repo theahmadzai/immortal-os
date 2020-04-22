@@ -11,7 +11,7 @@
 ;------------------------
 print_char:         push    ax
 
-                    mov     ah, 0x0e
+                    mov     ah, 0x0E
                     int     0x10
 
                     pop     ax
@@ -24,7 +24,7 @@ print_char:         push    ax
 print_string:       push    ax
                     push    si
 
-                    mov     ah, 0x0e
+                    mov     ah, 0x0E
 
 _ps.loop:           lodsb
                     cmp     al, 0
@@ -43,7 +43,7 @@ _ps.end:            pop     si
 print_hex:          push    dx
                     push    cx
 
-                    mov     ah, 0x0e
+                    mov     ah, 0x0E
                     mov     cx, 4
 
 _ph.loop:           mov     al, dh                          ; 0x1E3F -> 0x1E
@@ -107,8 +107,8 @@ _rfd.end:           pop     es
 
 [bits 32]
 
-VIDEO_MEMORY        equ     0xb8000
-WHITE_ON_BLACK      equ     0x0f
+VIDEO_MEMORY        equ     0xB8000
+WHITE_ON_BLACK      equ     0x0F
 
 print_string_pm:    pusha
                     mov     edx, VIDEO_MEMORY
